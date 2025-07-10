@@ -64,6 +64,7 @@ def interactive_mode():
     print("🌐 Interactive Context Translator")
     print("=" * 40)
     print("Available contexts: personal, business, technical, general")
+    print("Available directions: EN→BG, BG→EN")
     print("Type 'quit' to exit")
     print()
 
@@ -79,6 +80,21 @@ def interactive_mode():
             print("❌ Please enter some text to translate.")
             continue
 
+        # Get translation direction
+        direction = input("🔄 Translation direction (EN→BG or BG→EN): ").strip().upper()
+
+        # Set source and target languages
+        if direction == "EN→BG" or direction == "EN-BG":
+            source_lang = "English"
+            target_lang = "Bulgarian"
+        elif direction == "BG→EN" or direction == "BG-EN":
+            source_lang = "Bulgarian"
+            target_lang = "English"
+        else:
+            print("❌ Invalid direction. Using EN→BG as default.")
+            source_lang = "English"
+            target_lang = "Bulgarian"
+
         # Get context
         context = input("🎯 Enter context (personal/business/technical/general): ").strip().lower()
 
@@ -89,16 +105,16 @@ def interactive_mode():
             context = 'general'
 
         # Translate
-        print("🔄 Translating...")
+        print(f"🔄 Translating from {source_lang} to {target_lang}...")
         translation = translator.translate(
             text=text,
-            source_lang="English",
-            target_lang="Bulgarian",
+            source_lang=source_lang,
+            target_lang=target_lang,
             context=context
         )
 
-        print(f"✅ Translation ({context}): {translation}")
-        print("-" * 40)
+        print(f"✅ Translation ({context}, {source_lang}→{target_lang}): {translation}")
+        print("-" * 50)
 
 
 if __name__ == "__main__":
