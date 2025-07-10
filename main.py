@@ -12,27 +12,32 @@ def test_basic_translation():
     # Create translator instance
     translator = ContextTranslator()
 
-    # Test cases
+    # Test cases - now with more varied examples
     test_cases = [
         {
-            "text": "Hello, how are you?",
+            "text": "Hey! What's up? Want to grab coffee later?",
             "context": "personal",
-            "description": "Personal greeting"
+            "description": "Personal casual conversation"
         },
         {
-            "text": "Please submit your quarterly report by Friday.",
+            "text": "We need to schedule a meeting to discuss the quarterly budget allocation.",
             "context": "business",
-            "description": "Business communication"
+            "description": "Business meeting request"
         },
         {
-            "text": "The database connection failed.",
+            "text": "The API endpoint returned a 404 error. Please check the URL configuration.",
             "context": "technical",
-            "description": "Technical error message"
+            "description": "Technical error report"
+        },
+        {
+            "text": "Thank you for your assistance with this matter.",
+            "context": "general",
+            "description": "General polite expression"
         }
     ]
 
-    print("🔄 Testing basic translation...")
-    print("=" * 50)
+    print("🔄 Testing improved context-aware translation...")
+    print("=" * 60)
 
     for i, test_case in enumerate(test_cases, 1):
         print(f"\n📝 Test {i}: {test_case['description']}")
@@ -48,7 +53,7 @@ def test_basic_translation():
         )
 
         print(f"Translation: {translation}")
-        print("-" * 30)
+        print("-" * 40)
 
 
 if __name__ == "__main__":
