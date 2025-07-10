@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_openai import AzureChatOpenAI
+from prompts import get_translation_prompt
 
 # Load environment variables
 load_dotenv()
@@ -33,16 +34,13 @@ class ContextTranslator:
             str: Translated text
         """
 
-        # Create basic prompt with context
-        prompt = f"""
-        You are a professional translator. Translate the following text from {source_lang} to {target_lang}.
-
-        Context: {context}
-
-        Original text: "{text}"
-
-        Please provide only the translation, without any additional explanations.
-        """
+        # Generate context-specific prompt
+        prompt = get_translation_prompt(
+            text=text,
+            source_lang=source_lang,
+            target_lang=target_lang,
+            context=context
+        )
 
         try:
             # Send translation request
