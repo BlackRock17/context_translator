@@ -1,37 +1,55 @@
 import os
 from dotenv import load_dotenv
-from langchain_openai import AzureChatOpenAI
+from translator import ContextTranslator
 
 # Load environment variables from .env file
 load_dotenv()
 
 
-def test_azure_connection():
-    """Test basic connection to Azure OpenAI"""
+def test_basic_translation():
+    """Test basic translation functionality"""
 
-    # Create Azure OpenAI client
-    llm = AzureChatOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
-        azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
-        temperature=0.7
-    )
+    # Create translator instance
+    translator = ContextTranslator()
 
-    # Simple test message
-    test_message = "Hello! Please respond with 'Connection successful' if you can read this."
+    # Test cases
+    test_cases = [
+        {
+            "text": "Hello, how are you?",
+            "context": "personal",
+            "description": "Personal greeting"
+        },
+        {
+            "text": "Please submit your quarterly report by Friday.",
+            "context": "business",
+            "description": "Business communication"
+        },
+        {
+            "text": "The database connection failed.",
+            "context": "technical",
+            "description": "Technical error message"
+        }
+    ]
 
-    try:
-        # Send message and get response
-        response = llm.invoke(test_message)
-        print(f"✅ Connection successful!")
-        print(f"Response: {response.content}")
-        return True
-    except Exception as e:
-        print(f"❌ Connection failed: {e}")
-        return False
+    print("🔄 Testing basic translation...")
+    print("=" * 50)
+
+    for i, test_case in enumerate(test_cases, 1):
+        print(f"\n📝 Test {i}: {test_case['description']}")
+        print(f"Original: {test_case['text']}")
+        print(f"Context: {test_case['context']}")
+
+        # Translate
+        translation = translator.translate(
+            text=test_case['text'],
+            source_lang="English",
+            target_lang="Bulgarian",
+            context=test_case['context']
+        )
+
+        print(f"Translation: {translation}")
+        print("-" * 30)
 
 
 if __name__ == "__main__":
-    print("Testing Azure OpenAI connection...")
-    test_azure_connection()
+    test_basic_translation()
